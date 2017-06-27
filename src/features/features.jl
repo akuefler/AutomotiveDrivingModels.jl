@@ -471,7 +471,9 @@ function Base.get(::Feature_Time_Consecutive_Brake, rec::SceneRecord, roadway::R
         pastframe_orig = pastframe
         id = rec[vehicle_index, pastframe].def.id
         while pastframe_inbounds(rec, pastframe-1) &&
-              get(ACC, rec, roadway, get_index_of_first_vehicle_with_id(rec, id, pastframe-1)) < 0.0
+              convert(Float64, get(ACC, rec, roadway,
+                                   get_index_of_first_vehicle_with_id(rec, id,
+                                                                      pastframe-1))) < 0.0
 
             pastframe -= 1
         end
@@ -490,7 +492,10 @@ function Base.get(::Feature_Time_Consecutive_Accel, rec::SceneRecord, roadway::R
         pastframe_orig = pastframe
         id = rec[vehicle_index, pastframe].def.id
         while pastframe_inbounds(rec, pastframe-1) &&
-              get(ACC, rec, roadway, get_index_of_first_vehicle_with_id(rec, id, pastframe-1)) > 0.0
+              #get(ACC, rec, roadway, get_index_of_first_vehicle_with_id(rec, id, pastframe-1)) > 0.0
+              convert(Float64,get(ACC, rec, roadway,
+                                  get_index_of_first_vehicle_with_id(rec, id,
+                                                                     pastframe-1))) > 0.0
 
             pastframe -= 1
         end
